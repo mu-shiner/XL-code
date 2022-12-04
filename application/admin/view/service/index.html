@@ -1,0 +1,45 @@
+{extend name='public:parent'}
+
+{block name="right"}
+
+    <div id="content-container" class="shop_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Index/index">首页</a></li>
+                <li><a href="#">服务中心</a></li>
+                <li class="active">服务中心列表</li>
+            </ol>
+        </div>
+
+        <div class="shop_content">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>服务中心名称</th>
+                        <th>管理员名称</th>
+                        <th>邀请码</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$servicelist" item="vo"}
+                <tr>
+                    <td>{$vo['service_id']}</td>
+                    <td>{$vo['service_name']}</td>
+                    <td>{$vo['username']}</td>
+                    <td>{$vo['invitation_code']}</td>
+                    <td>{$vo['create_time']}</td>
+                    <td>
+                    <a type="button" class="btn btn-success  btn-xs btn-rounded"  href="{:url('Admin/service/edit',array('id'=>$vo['service_id']))}">  编辑  </a>
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            {$servicelist->render()}
+        </div>
+
+    </div>
+{/block}

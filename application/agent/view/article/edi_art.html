@@ -1,0 +1,46 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <div id="content-container">
+    <div id="page-title">
+
+    </div>
+
+    <ol class="breadcrumb">
+        <li><a href="{:url('Admin/Index/index')}">首页</a></li>
+        <li><a href="#">系统设置</a></li>
+        <li class="active">编辑文章</li>
+    </ol>
+
+    <div class="col-lg-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Article Edit</h3>
+            </div>
+
+            <!--No Label Form-->
+            <!--===================================================-->
+            <form class="form-horizontal" method="post" action="{:url('Admin/Article/edi_art')}">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4 mar-btm">
+                            <input type="text" class="form-control" name="title" placeholder="标题" value="{$data.title}" required="required" maxlength="15">
+                            <input type="hidden" name="id" value="{$data.id}">
+                        </div>
+                        <div class="col-md-4 mar-btm">
+                            <input type="text" class="form-control"  name="abstract"  placeholder="摘要" value="{$data.abstract}" required="required" maxlength="25">
+                        </div>
+                    </div>
+                    <textarea placeholder="Message" rows="13" class="form-control" name="content" required="required" maxlength="55">{$data.content}</textarea>
+                </div>
+                <div class="panel-footer text-left">
+                    <button class="btn btn-default" type="submit">Sbumit</button>
+                </div>
+            </form>
+            <!--===================================================-->
+            <!--End No Label Form-->
+
+        </div>
+    </div>
+</div>
+{/block}

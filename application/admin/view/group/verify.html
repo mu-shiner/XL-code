@@ -1,0 +1,87 @@
+{extend name='public:parent'}
+
+{block name="right"}
+<style>
+
+</style>
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Index/index">首页</a></li>
+                <li><a href="#">团购管理</a></li>
+                <li class="active">核销券</li>
+            </ol>
+        </div>
+        <div class="cf">
+            <form class="form-inline" action="" method="get">
+               
+                <label class="inline">核销店铺</label>
+                <input type="text" name="shopname" value="" class="form-control">
+                <label class="inline">用户帐号</label>
+                <input type="text" name="username" value="" class="form-control">
+                <label class="inline">核销状态</label>
+                        <select name="status" class="form-control">
+                            <option value="">--全部--</option>
+                            <option value="1">--可使用--</option>
+                            <option value="2">--已核销--</option>
+                            <option value="3">--转让中--</option>
+                            <option value="4">--已过期--</option>
+                        </select>
+                <button type="submit" class="btn btn-purple btn-sm">
+                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                    搜索
+                </button>
+            </form>
+        </div>
+        <div class="goods_content" style="margin-top:20px">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>商品名称</th>
+                        <th>商品图片</th>
+                        <th>商品价格</th>
+                        <th>拼团价格</th>
+                        <th>用户</th>
+                        <th>拼团时间</th>
+                        <th>核销店铺</th>
+                        <th>核销时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$list" item="vo"}
+                <tr>
+                    <td>{$vo['id']}</td>
+                    <td>{$vo['goods_name']}</td>
+                    <td><img id="goods_img" style="height:40px;" src="{$vo['goods_img']}" /></td>
+                    <td>{$vo['goods_price']}</td>
+                    <td>{$vo['order_price']}</td>
+                    <td>{$vo['username']}</td>
+                    <td>{$vo['create_time']}</td>
+                    <td>{$vo['shop_name']}</td>
+                    <td>{$vo['verify_time']}</td>
+                    <td>{$vo['state_name']}</td>
+                    <td>
+                        <!--<a  type="button" class="btn btn-safe  btn-xs btn-rounded"  href="{:url('Admin/Group/edit',array('id'=>$vo['order_id']))}">  查看  </a>-->
+                        <!--{if $vo['order_status']=='1'}-->
+                        <!--<div onclick="send({$vo['order_id']})" type="button" class="btn btn-warning  btn-xs btn-rounded">  发货  </div>-->
+                        <!--{/if}-->
+                     
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+                
+            </table>
+            {$list->render()}
+        </div>
+     
+   
+      
+    </div>
+    
+    
+
+{/block}

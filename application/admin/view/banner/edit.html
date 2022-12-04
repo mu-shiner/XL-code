@@ -1,0 +1,89 @@
+{extend name='public:parent'}
+
+{block name="right"}
+<link href="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/css/fileinput.css" rel="stylesheet">
+<link href="{$Think.config.web_root}/kindeditor/themes/default/default.css" rel="stylesheet">
+<link href="{$Think.config.web_root}/kindeditor/plugins/code/prettify.css" rel="stylesheet">
+<style>
+    .file_image {margin-left: 15px;}
+</style>
+
+<div id="content-container" class="goods_container">
+    <div class="div_local">
+        <ol class="breadcrumb">
+            <li><a href="/admin/Index/index">首页</a></li>
+            <li><a href="#">轮播图管理</a></li>
+            <li class="active">编辑轮播图</li>
+        </ol>
+    </div>
+    <div id="add_container">
+        <form action="{:url('banner/edit')}" class="form-horizontal"  enctype="multipart/form-data"   method="post" onsubmit="return checkValid(this)"  >
+            <div class="form-group">
+                <label for="img" class="col-sm-2 control-label">轮播图片</label>
+                <div class="col-sm-10">
+                    <input type="file" name="image_data[]" id="uploadfile" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple  />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn  btn_submit">保存</button>
+                </div>
+            </div>
+            <input type="hidden" id="id" name="id" value="{$banner['id']}">
+            <input type="hidden" id="attach_id" name="img" value="{$banner['img']}">
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/js/fileinput.js"></script>
+</script>
+
+<script>
+    let img_arr =  $('#attach_id').val().split(',');
+    let preview_arr = img_arr.map(item => {
+        return `<img style='width: 200px; height: 200px;' src='${item}' class='file-preview-image' />`
+    })
+    // console.log('图片', img_arr)
+
+    $("#uploadfile").fileinput({
+        language: 'zh', //设置语言
+        uploadUrl:"/home/upload/fileupload", //上传的地址
+        allowedFileExtensions: ['jpg','png','jpeg','gif'],//接收的文件后缀
+        // for image files
+        initialPreview: preview_arr,
+        //uploadExtraData:{"id": 1, "fileName":'123.mp3'},
+        uploadAsync: false, //默认异步上传
+        showUpload:true, //是否显示上传按钮
+        showRemove :false, //显示移除按钮
+        showPreview :true, //是否显示预览
+        showCaption:false,//是否显示标题
+        browseClass:"btn btn-primary", //按钮样式
+        dropZoneEnabled: false,//是否显示拖拽区域
+        minImageWidth: 50, //图片的最小宽度
+        minImageHeight: 50,//图片的最小高度
+        //maxImageWidth: 1000,//图片的最大宽度
+        //maxImageHeight: 1000,//图片的最大高度
+        maxFileSize:0,//单位为kb，如果为0表示不限制文件大小
+        //minFileCount: 0,
+        maxFileCount:5, //表示允许同时上传的最大文件个数
+        enctype:'multipart/form-data',
+        validateInitialCount:true,
+        previewFileIcon: "<iclass='glyphicon glyphicon-king'></i>",
+        msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        fileActionSettings:{
+            showRemove: true, //移除
+            showUpload: false, //上传
+            showZoom: true, //放大
+            showDrag: true,
+        },
+        uploadExtraData:{}, //额外参数设置
+    }).on('filebatchuploadsuccess', function(event, data, previewId, index) {
+        $("#attach_id").val(data.response.data);
+        //console.log(data)
+    })
+
+</script>
+
+{/block}

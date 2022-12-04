@@ -1,0 +1,575 @@
+{extend name='public:parent'}
+
+
+
+{block name="right"}
+
+<link href="{$Think.config.web_root}/kindeditor/plugins/code/prettify.css" rel="stylesheet">
+<link href="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/css/fileinput.css" rel="stylesheet">
+
+<link href="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/css/fileinput.css" rel="stylesheet">
+
+<link href="{$Think.config.web_root}/layui-v2.6.8/layui/css/layui.css" rel="stylesheet">
+
+<style>
+    .file_image {
+        margin-left: 15px;
+    }
+
+    input {
+        width: 300px;
+
+        border: none;
+
+        outline: none;
+
+        background-color: #FFFFFF;
+
+    }
+
+    .contacts_card_electronic_front, .contacts_card_electronic_reverse, .business_licence_number_electronic, .logo{
+
+        width: 300px;
+
+        height: 150px;
+
+    }
+
+    .panel-heading {
+
+        color: #333;
+
+        background-color: #f5f5f5;
+
+        border-color: #ddd;
+
+        padding: 10px 15px;
+
+        border-bottom: 1px solid transparent;
+
+        position: relative;
+
+        height: 40px;
+
+        border-top-left-radius: 5px;
+
+        border-top-right-radius: 5px;
+
+    }
+
+    .row {
+
+        margin-bottom: 15px !important;
+
+    }
+
+    #map_container {
+
+        height: 400px;
+
+        margin-top: 15px;
+
+    }
+</style>
+
+
+
+<div id="content-container" class="goods_container">
+
+    <div class="div_local">
+
+        <ol class="breadcrumb">
+
+            <li><a href="/admin/Admin/index">首页</a></li>
+
+            <li><a href="#">商家管理</a></li>
+
+            <li class="active">编辑店铺</li>
+
+        </ol>
+
+    </div>
+
+    <div id="failLayer" style="display: none;padding: 20px;">
+        <div class="layui-input-inline">
+            <label>失败原因：</label>
+        </div>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" name="fasle_info" value="">
+        </div>
+        <button class="layui-btn layui-btn-normal" id="fasleInfoBtn">提交</button>
+    </div>
+
+    <div id="info_content">
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">公司信息：</div>
+
+            <div class="panel-body">
+
+                <div class="row">
+
+                    <div class="col-sm-4">
+
+                        <label>公司名称：</label>
+
+                        <input type="text" disabled class="company_name" value="{$info['company_name']}" />
+
+                    </div>
+
+                    <div class="col-sm-4">
+
+                        <label>统一社会信用码：</label>
+
+                        <input type="text" disabled class="business_licence_number"
+                            value="{$info['business_licence_number']}">
+
+                    </div>
+
+                    <!-- <div class="col-sm-4">
+                        <label>法人经营范围：</label>
+                        <input type="text" disabled class="business_sphere" value="{$info['business_sphere']}">
+                    </div> -->
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-sm-4">
+
+                        <label>负责人姓名：</label>
+
+                        <input type="text" disabled class="contacts_name" value="{$info['contacts_name']}">
+
+                    </div>
+
+                    <div class="col-sm-4">
+
+                        <label>负责人手机：</label>
+
+                        <input type="text" disabled class="contacts_mobile" value="{$info['contacts_mobile']}">
+
+                    </div>
+
+                    <div class="col-sm-4">
+
+                        <label>负责人身份证号：</label>
+
+                        <input type="text" disabled class="contacts_card_no" value="{$info['contacts_card_no']}">
+
+                    </div>
+
+                </div>
+
+                <!-- <div class="row">
+                    <label class="col-sm-2">法人身份正面：</label>
+                    <div class="col-sm-10">
+                        <img class="contacts_card_electronic_front" src="{$info['contacts_card_electronic_front']}"
+                            style="width:100%">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-2">法人身份反面：</label>
+                    <div class="col-sm-10">
+                        <img class="contacts_card_electronic_reverse" src="{$info['contacts_card_electronic_reverse']}"
+                            style="width:100%">
+                    </div>
+                </div> -->
+
+                <div class="row">
+
+                    <label class="col-sm-2">营业执照照片：</label>
+
+                    <div class="col-sm-10">
+
+                        <img class="business_licence_number_electronic"
+                            src="{$info['business_licence_number_electronic']}" style="width:100%">
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <label class="col-sm-2">公司地址：</label>
+
+                    <div class="col-sm-10">
+
+                        <input type="text" disabled class="company_address"
+                            value="{$info['company_province']}{$info['company_city']}{$info['company_district']}{$info['company_address']}">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">结算信息：</div>
+
+            <div class="panel-body" style="padding: 30px;">
+
+                <div class="row">
+
+                    <div class="col-sm-4">
+
+                        <label>银行开户名：</label>
+
+                        <input type="text" disabled class="bank_account_name" value="{$info['bank_account_name']}">
+
+                    </div>
+
+                    <div class="col-sm-4">
+
+                        <label>银行帐号：</label>
+
+                        <input type="text" disabled class="bank_account_number" value="{$info['bank_account_number']}">
+
+                    </div>
+
+                    <div class="col-sm-4">
+
+                        <label>开户行地址：</label>
+
+                        <input type="text" disabled class="bank_address" value="{$info['bank_address']}">
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-sm-4">
+
+                        <label>支付宝名称：</label>
+
+                        <input type="text" disabled class="alipay_name" value="{$info['alipay_name']}">
+
+                    </div>
+
+                    <div class="col-sm-4">
+
+                        <label>支付宝帐号：</label>
+
+                        <input type="text" disabled class="alipay_code" value="{$info['alipay_code']}">
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">店铺信息：</div>
+
+            <div class="panel-body" style="padding: 30px;">
+
+                <div class="row">
+
+                    <label class="col-sm-2">店铺名称：</label>
+
+                    <div class="col-sm-10">
+
+                        <input type="text" disabled class="shop_name" value="{$shopinfo['shop_name']}">
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <label class="col-sm-2">店铺logo：</label>
+
+                    <div class="col-sm-10">
+
+                        <img class="logo" src="{$shopinfo['logo']}" style="width:100%">
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <label class="col-sm-2">结算价：</label>
+
+                    <div class="layui-input-inline col-sm-10">
+                        <input type="text" class="settlement_price layui-input" style="width: 300px;" value="{$shopinfo['settlement_price']}">
+                    </div>
+    
+                </div>
+
+                <div class="row">
+
+                    <label class="col-sm-2">店铺地址：</label>
+
+                    <div class="col-sm-10">
+                            <div class="layui-input-inline">
+                                <input type="text" name="province" placeholder="请输入省会" autocomplete="off" class="layui-input" value="{$shopinfo['province_name']}">
+                            </div>
+                            <div class="layui-input-inline">
+                                <input type="text" name="city" placeholder="请输入城市" autocomplete="off" class="layui-input" value="{$shopinfo['city_name']}">
+                            </div>
+                            <div class="layui-input-inline">
+                                <input type="text" name="district" placeholder="请输入区/县" autocomplete="off"
+                                    class="layui-input" value="{$shopinfo['district_name']}">
+                            </div>
+                            <input class="layui-input" type="text" name="address" placeholder="请输入详细地址（请勿重复填写省市区）" value="{$shopinfo['address']}">
+                            <button class="layui-btn layui-btn-primary" onclick="refreshFrom();">查找地址</button>
+                            <input type="hidden" name="longitude" class="layui-input" value="{$shopinfo['longitude']}"/>
+                            <input type="hidden" name="latitude" class="layui-input" value="{$shopinfo['latitude']}"/>
+                            <div id="map_container"></div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <label class="col-sm-2">开店套餐：</label>
+
+                    <div class="col-sm-10">
+
+                            <textarea id="editor" name="editor" placeholder="请输入商品信息" style="width:80%;height:500px;">{$shopinfo['goods_content']}
+
+                            </textarea>
+    
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <label class="col-sm-2">核销行业：</label>
+
+                    <div class="col-sm-10">
+
+                        <input type="text" disabled class="check_name" value="{$shopinfo['check_name']}">
+
+                    </div>
+
+                </div>
+
+                <input type="hidden" value="{$shopinfo['shop_id']}" name="shop_id">
+                {if $shopinfo['shop_status']=='2'}
+                <div class="row">
+                    <div class="layui-input-inline">
+                        <button class="btn btn-success" id="successBtn">审核通过</button>
+                    </div>
+                    <div class="layui-input-inline">
+                        <button class="btn btn-danger" id="cancalBtn">审核失败</button>
+                    </div>
+                </div>
+                {else}
+                <div class="row">
+                    <button class="btn btn-primary" id="submitBtn">提交</button>
+                </div>
+                {/if}
+              
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script type="text/javascript" src="{$Think.config.web_root}/js/jquery-2.2.4.min.js"></script>
+
+<script type="text/javascript" src="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/js/fileinput.js"></script>
+
+<script type="text/javascript" src="{$Think.config.web_root}/kindeditor/kindeditor-all.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/kindeditor/lang/zh-CN.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/kindeditor/plugins/code/prettify.js"></script>
+
+<script type="text/javascript" src="{$Think.config.web_root}/layui-v2.6.8/layui/layui.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/js/map_address.js"></script>
+
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=2df5711d4e2fd9ecd1622b5a53fc6b1d"></script>
+
+
+
+
+
+
+
+<script type="text/javascript" charset="utf-8">
+
+</script>
+
+
+
+<script>
+    KindEditor.ready(function(K) {
+		var editor1 = K.create('textarea[name="editor"]', {
+			cssPath : '{$Think.config.web_root}/kindeditor/plugins/code/prettify.css',
+			uploadJson : "/admin/goods/imgUpload",//图片上传后的处理地址
+			urlType : 'domain',
+			afterBlur: function () { this.sync()}
+		});
+		prettyPrint();
+	});
+
+    // 地图展示
+    var latlng = {lat:'',lng:''};
+    if( $('input[name=longitude]').val() && $('input[name=latitude]').val() ){
+        latlng.lat = $('input[name=latitude]').val()
+        latlng.lng = $('input[name=longitude]').val()
+    } else {
+        latlng.lat = ''
+        latlng.lng = ''
+    }
+    var map = new mapClass('map_container', latlng);
+
+    function refreshFrom() {
+        // 地址搜索
+        orderAddressChange();
+	    map.mapChange();
+
+        
+	}
+    
+    function orderAddressChange() {
+	    map.address.province_name = $("input[name=province]").val();
+	    map.address.city_name = $("input[name=city]").val();
+	    map.address.district_name = $("input[name=district]").val();
+	    map.address.address = $("input[name=address]").val()
+        map.address.longitude = $("input[name=longitude]").val()
+        map.address.latitude = $("input[name=latitude]").val()
+    }
+
+    //地图点击回调事件
+	function mapChangeCallBack(){
+	    $("input[name=address]").val(map.address.address);//详细地址
+        $("input[name=province]").val(map.address.province_name)
+        $("input[name=city]").val(map.address.city_name)
+        $("input[name=district]").val(map.address.district_name)
+        $("input[name=longitude]").val(map.address.longitude);//坐标
+	    $("input[name=latitude]").val(map.address.latitude);//坐标
+        map.map_change = true;
+    }
+
+    function selectCallBack(){
+	    $("input[name=longitude]").val(map.address.longitude);//坐标
+	    $("input[name=latitude]").val(map.address.latitude);//坐标
+	}
+
+    // 审核
+    // 审核成功
+    $('#successBtn').click(function (){
+        $.ajax({
+            url:"/Admin/Shop/shopAdd",
+            method: 'POST',
+            data: {
+                shop_status:1,
+                shop_id: $('input[name=shop_id]').val()
+            }, 
+            success: function(result){
+                layer.open({
+                    type: 1,
+                    title: '信息',
+                    area: ['300px','150px'],
+                    content: '<p style="text-align:center;margin-top:20px">'+result.msg+'</p>',
+                    cancel: function(){ 
+                        location.href='/Admin/shop/shoplist'
+                    }
+                })
+            },
+            error: function(err) {
+                layer.msg('系统错误')
+            }
+        });
+    })
+
+    // 审核失败
+    $('#cancalBtn').click(function (){
+        layer.open({
+            type: 1,
+            title: '审核失败原因',
+            area: ['500px','150px'],
+            content: $('#failLayer')
+        })
+        
+    })
+
+    $('#fasleInfoBtn').click(function(){
+        if($('input[name="fasle_info"]')==''){
+            layer.msg('请输入审核失败的原因')
+            return;
+        }
+        $.ajax({
+            url:"/Admin/Shop/shopAdd",
+            method: 'POST',
+            data: {
+                shop_status:3,
+                shop_id: $('input[name=shop_id]').val(),
+                fasle_info:$('input[name=fasle_info]').val()
+            }, 
+            success: function(result){
+                layer.open({
+                    type: 1,
+                    title: '消息',
+                    area: ['300px','150px'],
+                    content: '<p style="text-align:center;margin-top:20px">'+result.msg+'</p>',
+                    cancel: function(){ 
+                        location.href='/Admin/shop/shoplist'
+                    }
+                })
+            },
+            error: function(err) {
+                console.log('系统错误');
+            }
+        });
+    })
+
+    // 提交
+    $('#submitBtn').click(function (){
+        
+        $.ajax({
+            url:"/Admin/Shop/shopAdd",
+            method: 'POST',
+            data: {
+                shop_id: $('input[name=shop_id]').val(),
+                province_name: $('input[name=province]').val(),
+                city_name: $('input[name=city]').val(),
+                district_name: $('input[name=district]').val(),
+                address: $('input[name=address]').val(),
+                longitude: $('input[name=longitude]').val(),
+                latitude: $('input[name=latitude]').val(),
+                goods_content: document.getElementById("editor").value,
+                settlement_price: $('.settlement_price').val()
+            }, 
+            success: function(result){
+                layer.open({
+                    type: 1,
+                    title: '消息',
+                    area: ['300px','150px'],
+                    content: '<p style="text-align:center;margin-top:20px">'+result.msg+'</p>',
+                    cancel: function(){ 
+                        location.href='/Admin/shop/shoplist'
+                    }
+                })
+            },
+            error: function(err) {
+                layer.msg('系统错误')
+            }
+        });
+    })
+
+   
+        
+    
+
+</script>
+
+
+
+{/block}

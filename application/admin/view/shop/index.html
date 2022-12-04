@@ -1,0 +1,92 @@
+{extend name='public:parent'}
+
+{block name="right"}
+
+    <div id="content-container" class="shop_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Index/index">首页</a></li>
+                <li><a href="#">商家管理</a></li>
+                <li class="active">店铺列表</li>
+            </ol>
+        </div>
+        <div class="cf">
+            <form class="form-inline" action="" method="get">
+                <label class="inline">服务中心</label>
+                        <select name="service_id" class="form-control">
+                            <option value="">--全部--</option>
+                            {foreach name="serlist" item="vo"}
+                            <option value="{$vo['service_id']}" {if(isset($_GET['service_id']) && $vo['service_id'] == $_GET['service_id'])}selected="selected"{/if}>{$vo['service_name']}</option>
+                            {/foreach}
+                        </select>
+                <label class="inline">店铺名称</label>
+                <input type="text" name="shopname" value="" class="form-control">
+                <button type="submit" class="btn btn-purple btn-sm">
+                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                    搜索
+                </button>
+            </form>
+        </div>
+
+        <div class="shop_content">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>店铺名称</th>
+                        <th>店铺图片</th>
+                        <th>店铺管理员</th>
+                        <th>创建时间</th>
+                        <th>店铺状态</th>
+                        <th>店铺地址</th>
+                        <th>核销类型</th>
+                        <th>服务中心</th>
+                        <th>余额</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$shoplist" item="vo"}
+                <tr>
+                    <td>{$vo['shop_id']}</td>
+                    <td>{$vo['shop_name']}</td>
+                    <td><img id="shop_img" style="height:40px;" src="{$vo['logo']}" /></td>
+                    <td>{$vo['username']}</td>
+                    <td>{$vo['create_time']}</td>
+                    <td>{$vo['state_name']}</td>
+                    <td>{$vo['province_name']}{$vo['city_name']}{$vo['district_name']}{$vo['address']}</td>
+                    <td>{$vo['type_name']}</td>
+                    <td>{$vo['service_name']}</td>
+                    <td>{$vo['account']}</td>
+                    <td>
+                    {if $vo['shop_status']!='2' && $vo['shop_status']!='0'}
+                    <a  type="button" class="btn btn-success  btn-xs btn-rounded"  href="{:url('Admin/shop/edit',array('id'=>$vo['shop_id']))}">  查看  </a>
+                        {if $vo['is_top']=='0'}
+                            <a  type="button" class="btn btn-warning  btn-xs btn-rounded"  href="javascript:if(confirm('确认置顶这店铺？'))location='{:url('Admin/shop/editShop',array('id'=>$vo['shop_id'],'is_top'=>1))}'">  置顶  </a>
+                        {else}
+                            <a  type="button" class="btn btn-warning  btn-xs btn-rounded"  href="javascript:if(confirm('确认取消置顶这店铺？'))location='{:url('Admin/shop/editShop',array('id'=>$vo['shop_id'],'is_top'=>0))}'">  取消置顶  </a>
+                        {/if}
+                    {/if}
+                    {if $vo['shop_status']=='2'}
+                        <a type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/shop/edit',array('id'=>$vo['shop_id'],'state'=>1))}">  审核  </a> 
+                    {/if}
+                    {if $vo['take_down']=='0'}
+                        {if $vo['shop_status']=='0'}
+                            <a  type="button" class="btn btn-danger  btn-xs btn-rounded"  href="javascript:if(confirm('确认删除这店铺？'))location='{:url('Admin/shop/delShop',array('id'=>$vo['shop_id']))}'">  删除  </a>
+                        {else}
+                            <a  type="button" class="btn btn-danger  btn-xs btn-rounded"  href="javascript:if(confirm('确认下架这店铺？'))location='{:url('Admin/shop/editShop',array('id'=>$vo['shop_id'],'take_down'=>1))}'">  下架  </a>
+                        {/if}
+                    {else}
+                        <a  type="button" class="btn btn-danger  btn-xs btn-rounded"  href="javascript:if(confirm('确认上架这店铺？'))location='{:url('Admin/shop/editShop',array('id'=>$vo['shop_id'],'take_down'=>0))}'">  上架  </a>
+                    {/if}
+                    
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            {$shoplist->render()}
+        </div>
+
+    </div>
+{/block}

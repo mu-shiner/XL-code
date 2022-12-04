@@ -1,0 +1,45 @@
+{extend name='public:parent'}
+
+{block name="right"}
+<div id="content-container" class="goods_container">
+    <div class="div_local">
+        <ol class="breadcrumb">
+            <li><a href="/admin/Index/index">首页</a></li>
+            <li><a href="#">提现管理</a></li>
+            <li class="active">提现设置</li>
+        </ol>
+    </div>
+    <div class="goods_content" style="margin-top:20px">
+        <table class="table table-bordered ">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>提现类型</th>
+                <th>提现手续费费率</th>
+                <th>最小提现金额</th>
+                <th>消耗金币比例</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name="$list" item="vo"}
+            <tr>
+                <td>{$vo['id']}</td>
+                <td>{$vo['config_type']}</td>
+                <td>{$vo['withdraw_rate']}</td>
+                <td>{$vo['min_price']}</td>
+                <td>{$vo['coin_rate']}</td>
+                <td>
+                    <a  type="button" class="btn btn-success  btn-xs btn-rounded"  href="{:url('Admin/Withdrawconfig/edit',array('id'=>$vo['id']))}">  编辑  </a>
+
+
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+{/block}

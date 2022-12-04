@@ -1,0 +1,80 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Admin/index">首页</a></li>
+                <li><a href="#">秒杀管理</a></li>
+                <li class="active">秒杀列表</li>
+            </ol>
+        </div>
+        <div class="cf">
+            <form class="form-inline" action="" method="get">
+               
+                <label class="inline">商品名称</label>
+                <input type="text" name="goodsname" value="" class="form-control">
+                
+                <label class="inline">活动状态</label>
+                        <select name="status" class="form-control">
+                            <option value="">--全部--</option>
+                            <option value="0">--已下架--</option>
+                            <option value="1">--已上架--</option>
+                            <option value="2">--已结束--</option>
+                            
+                        </select>
+                <button type="submit" class="btn btn-purple btn-sm">
+                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                    搜索
+                </button>
+            </form>
+        </div>
+        <div class="goods_content" style="margin-top:20px">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>商品名称</th>
+                        <th>商品图片</th>
+                        <th>活动时间</th>
+                        <th>价格</th>
+                        <th>状态</th>
+                        <th>分红金额</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$list" item="vo"}
+                <tr>
+                    <td>{$vo['group_id']}</td>
+                    <td>{$vo['goods_name']}</td>
+                    <td><img id="goods_img" style="height:40px;" src="{$vo['goods_img']}" /></td>
+                    <td>{$vo['begin_time']}-{$vo['end_time']}</td>
+                    <td>{$vo['price']}</td>
+                    <td>{$vo['state_name']}</td>
+                    <td>{$vo['dividend_price']}</td>
+                    <td>
+                    {if $vo['status']!='0'}
+                    <a  type="button" class="btn btn-success  btn-xs btn-rounded"  href="{:url('Admin/Group/edit',array('id'=>$vo['group_id'],'is_copy'=>1))}">  复制  </a>
+                    {/if}
+                    {if $vo['status']=='0'}
+                        <a  type="button" class="btn btn-success  btn-xs btn-rounded"  href="{:url('Admin/Group/edit',array('id'=>$vo['group_id']))}">  编辑  </a>
+                        <a  type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/Group/editGroup',array('id'=>$vo['group_id'],'status'=>1))}">  上架  </a>
+                        <a  type="button" class="btn btn-danger  btn-xs btn-rounded"  href="javascript:if(confirm('确认删除这活动？'))location='{:url('Admin/Group/delGroup',array('id'=>$vo['group_id']))}'">  删除  </a>
+                    {/if}
+                    {if $vo['status']=='1'}
+                        <a type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/Group/editGroup',array('id'=>$vo['group_id'],'status'=>0))}">  下架  </a>
+                    {/if}
+                    
+                     
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+                
+            </table>
+            {$list->render()}
+        </div>
+
+    </div>
+{/block}

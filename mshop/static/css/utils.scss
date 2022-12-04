@@ -1,0 +1,59 @@
+// 混合变量
+// 居中
+%flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+%flex-center-y {
+	display: flex;
+	align-items: center;
+}
+// 省略号
+%text-ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+// 继承
+.flex-center {
+	@extend %flex-center;
+}
+.flex-center-y {
+	@extend %flex-center-y;
+}
+
+.text-ellipsis {
+	@extend %text-ellipsis;
+}
+
+
+.flex-title {
+	@extend %flex-center-y;
+	justify-content: space-between;
+	>.main {
+		flex: 1;
+	}
+	>.ohter {
+		text-align: right;
+	}
+}
+
+.has-arrow {
+	&::after {
+		position: absolute;
+		right: 30rpx;
+		content: '';
+		width: 16rpx;
+		height: 16rpx;
+		border-right: 1rpx solid $black-color;
+		border-top: 1rpx solid $black-color;
+		transform: rotate(45deg);
+	}
+}
+
+.has-active {
+	&:active {
+		background-color: $app-active-color;
+	}
+}

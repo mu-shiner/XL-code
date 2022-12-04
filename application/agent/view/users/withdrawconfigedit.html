@@ -1,0 +1,57 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <link href="{$Think.config.web_root}/plugins/wysiwyg/css/wysiwyg-editor.css" rel="stylesheet">
+    <link href="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/css/fileinput.css" rel="stylesheet">
+    <link href="{$Think.config.web_root}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<style>
+    .file_image {margin-left: 15px;}
+    .form-control {
+        height: auto;
+    }
+</style>
+
+<div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Admin/index">首页</a></li>
+                <li><a href="#">会员管理</a></li>
+                <li class="active">修改配置</li>
+            </ol>
+        </div>
+        <div id="add_container">
+            <form action="{:url('Users/withdrawconfigedit')}" class="form-horizontal"  enctype="multipart/form-data"   method="post" onsubmit="return checkValid(this)"  >
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">配置项目</label>
+                    <input type="text" class="form-control txt_250"  value="{$info['config_name']}" disabled='disabled'>
+                </div>
+                <div class="form-group">
+                    <label for="rate_one" class="col-sm-2 control-label">手续费比例%</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control txt_250" id="withdraw_rate" name="withdraw_rate" value="{$info['withdraw_rate']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rate_two" class="col-sm-2 control-label">手续费单笔</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control txt_250" id="withdraw_fixed" name="withdraw_fixed" value="{$info['withdraw_fixed']}">
+                    </div>
+                </div>
+                
+                <input type="hidden" id="config_id" name="config_id" value="{$info['id']}">
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn  btn_submit">保存</button>
+                    </div>
+                </div>
+               
+                
+            </form>
+        </div>
+    </div>
+
+<script type="text/javascript" src="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/js/fileinput.js"></script>
+
+
+
+{/block}

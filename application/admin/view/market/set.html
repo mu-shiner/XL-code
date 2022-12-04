@@ -1,0 +1,75 @@
+{extend name='public:parent'}
+
+{block name="right"}
+<link href="{$Think.config.web_root}/plugins/wysiwyg/css/wysiwyg-editor.css" rel="stylesheet">
+<link href="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/css/fileinput.css" rel="stylesheet">
+<link href="{$Think.config.web_root}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<style>
+    .file_image {margin-left: 15px;}
+    .form-control {
+        height: auto;
+    }
+</style>
+
+<div id="content-container" class="goods_container">
+    <div class="div_local">
+        <ol class="breadcrumb">
+            <li><a href="/admin/Index/index">首页</a></li>
+            <li><a href="#">市场管理</a></li>
+            <li class="active">基本设置</li>
+        </ol>
+    </div>
+    <div id="add_container">
+        <form action="{:url('market/set')}" class="form-horizontal"  enctype="multipart/form-data"   method="post" onsubmit="return checkValid(this)"  >
+            <div class="form-group">
+                <label for="rate" class="col-sm-2 control-label">手续费费率</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control txt_250" id="rate" name="rate" value = "{$set.rate|default = 0}">
+                </div>
+            </div>
+            <!--<div class="form-group">-->
+            <!--    <label for="jifen" class="col-sm-2 control-label">积分比例</label>-->
+            <!--    <div class="col-sm-10">-->
+            <!--        <input type="text" class="form-control txt_250" id="jifen" name="jifen" value ="{$set.jifen|default = 0}">-->
+            <!--    </div>-->
+            <!--</div>-->
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn  btn_submit">保存</button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/js/fileinput.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/wysiwyg.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/wysiwyg-editor.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/demo.js"></script>
+
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<script>
+
+
+    //验证
+    function checkValid(obj) {
+        var jifen = $("jifen").val();
+        var rate = $('rate').val();
+        if(jifen <0){
+            layer.alert("积分比例不能为负");
+        }
+        if(rate <0){
+            layer.alert("手续费费率不能为负");
+        }
+        return true;
+    }
+
+
+
+</script>
+
+{/block}

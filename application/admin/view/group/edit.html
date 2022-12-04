@@ -1,0 +1,142 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <link href="{$Think.config.web_root}/plugins/wysiwyg/css/wysiwyg-editor.css" rel="stylesheet">
+    <link href="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/css/fileinput.css" rel="stylesheet">
+    <link href="{$Think.config.web_root}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<style>
+    .file_image {margin-left: 15px;}
+    .form-control {
+        height: auto;
+    }
+</style>
+
+<div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Index/index">首页</a></li>
+                <li><a href="#">团购管理</a></li>
+                <li class="active">编辑团购</li>
+            </ol>
+        </div>
+        <div id="add_container">
+            <form action="{:url('group/groupAdd')}" class="form-horizontal"  enctype="multipart/form-data"   method="post" onsubmit="return checkValid(this)"  >
+                <div class="form-group">
+                    <label for="goods_id" class="col-sm-2 control-label">团购商品</label>
+                    <div class="col-sm-10">
+                        <select  class="form-control select_120" id="goods_id" name="goods_id">
+                            {foreach name="$goodslist" item="vo"}
+                            <option value="{$vo['id']}" {if($info['goods_id'] == $vo['id'])}selected="selected"{/if}>{$vo['goods_name']}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signup_price" class="col-sm-2 control-label">团购价格</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control txt_250" id="price" name="price" value="{$info['price']}">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="team_num" class="col-sm-2 control-label">成团人数</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control txt_250" id="team_num" name="team_num" value="{$info['team_num']}">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="get_num" class="col-sm-2 control-label">中奖人数</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control txt_250" id="get_num" name="get_num" value="{$info['get_num']}">
+                    </div>
+                </div>
+           
+                <div class="form-group">
+                    <label for="group_time" class="col-sm-2 control-label">活动时间</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="begin_time" value="{$info['begin_time']}" id="datetimepicker3">
+                        <span> - </span>
+                        <input type="text" name="end_time" value="{$info['end_time']}" id="datetimepicker4">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dividend_price" class="col-sm-2 control-label">市场分红金额</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control txt_250" id="dividend_price" name="dividend_price" value="{$info['dividend_price']}">
+                    </div>
+                </div>
+             
+                <input type="hidden" id="group_id" name="group_id" value="{$info['group_id']}">
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn  btn_submit">保存</button>
+                    </div>
+                </div>
+               
+                
+            </form>
+        </div>
+    </div>
+
+<script type="text/javascript" src="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/js/fileinput.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/wysiwyg.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/wysiwyg-editor.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/demo.js"></script>
+
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<script>
+    $('#datetimepicker1').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language: 'zh-CN',
+    });
+    $('#datetimepicker2').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language: 'zh-CN',
+    });
+     $('#datetimepicker3').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language: 'zh-CN',
+    });
+     $('#datetimepicker4').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language: 'zh-CN',
+    });
+ 
+    
+    //验证
+    function checkValid(obj) {
+        var signup_num = $("#signup_num").val();
+        var signup_price = $("#signup_price").val();
+        var max_price = $("#max_price").val();
+        if (signup_num <= 0){
+            layer.alert('报名人数不能为空！');
+            return false;
+        }
+        if (signup_price <= 0){
+            layer.alert('报名价格不能为空！');
+            return false;
+        }
+        if (max_price <= 0){
+            layer.alert('封顶价格不能为空！');
+            return false;
+        }
+        return true;
+    }
+
+    function changeVal(obj) {
+        var val = $(obj).val();
+        if (val == 1){
+            $(obj).val(0);
+        }else{
+            $(obj).val(1);
+        }
+    }
+
+
+</script>
+
+{/block}

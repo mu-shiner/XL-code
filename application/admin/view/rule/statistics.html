@@ -1,0 +1,117 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <div id="content-container">
+    <div class="col-sm-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">数据统计</h3>
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tbody style="font-size:15px">
+                        <tr>
+                            <td><a href="{:url('Admin/Users/usersList')}">总会员数</a></td>
+                            <td><a href="{:url('Admin/Users/usersList')}">{$data['all_users_num']}</a></td>
+                            <td><a href="{:url('Admin/Users/usersList',array('is_partner'=>1))}">总合伙人数</a></td>
+                            <td><a href="{:url('Admin/Users/usersList')}">{$data['all_partner_num']}</a></td>
+                            <td><a href="{:url('Admin/Users/usersList')}">昨日新增会员数</a></td>
+                            <td><a href="{:url('Admin/Users/usersList')}">{$data['yesterday_users_num']}</a></td>
+                            <td><a href="{:url('Admin/Users/usersList',array('is_partner'=>1))}">合伙人总积分</a></td>
+                            <td><a href="{:url('Admin/Users/usersList')}">{$data['all_partner_money']}</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="{:url('Admin/Users/usersList')}">会员总余额</a></td>
+                            <td><a href="{:url('Admin/Users/usersList')}">{$data['all_balance_money']}</a></td>
+                            <td><a href="{:url('Admin/Users/usersList')}">会员总积分</a></td>
+                            <td><a href="{:url('Admin/Users/usersList')}">{$data['all_point']}</a></td>
+                            <td><a href="{:url('Admin/Users/usersWithdrawList',array('type'=>2))}">会员余额提现</a></td>
+                            <td><a href="{:url('Admin/Users/usersWithdrawList',array('type'=>2))}">{$data['all_money_withdra']}</a></td>
+                            <td><a href="{:url('Admin/Users/usersWithdrawList',array('type'=>1))}">会员积分提现</a></td>
+                            <td><a href="{:url('Admin/Users/usersWithdrawList',array('type'=>1))}">{$data['all_point_withdra']}</a></td>
+                        </tr>
+                         <tr>
+                            <td>拼团订单总额</td>
+                            <td>{$data['all_order_price']}</td>
+                            <td>昨日拼团订单总额</td>
+                            <td>{$data['yesterday_order_price']}</td>
+                            <td>订单线上支付总额</td>
+                            <td>{$data['all_order_money']}</td>
+                            <td>会员总充值余额</td>
+                            <td>{$data['all_user_price']}</td>
+                        </tr>
+                        <tr>
+                            <td><a href="{:url('Admin/Group/team')}">总成团数</a></td>
+                            <td><a href="{:url('Admin/Group/team')}">{$data['all_team_num']}</a></td>
+                            <td><a href="{:url('Admin/Group/team')}">实物成团数</a></td>
+                            <td><a href="{:url('Admin/Group/team')}">{$data['shi_team_num']}</a></td>
+                            <td><a href="{:url('Admin/Group/team')}">通用券成团数</a></td>
+                            <td><a href="{:url('Admin/Group/team')}">{$data['xu_team_num']}</a></td>
+                            <td><a href="{:url('Admin/Group/team')}">昨日成团数</a></td>
+                            <td><a href="{:url('Admin/Group/team')}">{$data['yesterday_team_num']}</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="{:url('Admin/Group/verify',array('status'=>2))}">通用券总核销数</a></td>
+                            <td><a href="{:url('Admin/Group/verify',array('status'=>2))}">{$data['all_verify_num']}</a></td>
+                            <td><a href="{:url('Admin/Group/verify',array('status'=>2))}">通用券昨日核销数</a></td>
+                            <td><a href="{:url('Admin/Group/verify',array('status'=>2))}">{$data['yesterday_verify_num']}</a></td>
+                            <td><a href="{:url('Admin/Group/verify',array('status'=>1))}">可用通用券数</a></td>
+                            <td><a href="{:url('Admin/Group/verify',array('status'=>1))}">{$data['verify_all_num']}</a></td>
+                            <td>店铺总余额</td>
+                            <td>{$data['shop_account']}</td>
+                        </tr>
+                        <tr>
+                            <td><a href="{:url('Admin/Group/team')}">今日成团数</a></td>
+                            <td><a href="{:url('Admin/Group/team')}">{$data['today_team_num']}</a></td>
+                            <td><a href="{:url('Admin/Users/usersList')}">今日新增会员数</a></td>
+                            <td><a href="{:url('Admin/Users/usersList')}">{$data['today_users_num']}</a></td>
+                            <td>今日拼团订单总额</td>
+                            <td>{$data['today_order_price']}</td>
+                            <td>今日会员充值余额</td>
+                            <td>{$data['today_user_price']}</td>
+                        </tr>
+                        <tr>
+                            <td>今日余额提现</td>
+                            <td>{$data['today_money_withdra']}</td>
+                            <td>今日积分提现</td>
+                            <td>{$data['today_point_withdra']}</td>
+                            <td>今日拼团线上支付</td>
+                            <td>{$data['today_order_money']}</td>
+                            <td>当前在线用户数</td>
+                            <td>{$data['online_num']}</td>
+                        </tr>
+                        <tr>
+                            <td><a href="{:url('Admin/Users/PartnerList')}">本周可提现分红人数</a></td>
+                            <td><a href="{:url('Admin/Users/PartnerList')}">{$data['partner_withdra_num']}</a></td>
+                            <td><a href="{:url('Admin/Users/PartnerList')}">本周可提现分红额度</a></td>
+                            <td><a href="{:url('Admin/Users/PartnerList')}">{$data['partner_withdra_money']}</a></td>
+                            <td>通用券过期总数</td>
+                            <td>{$data['all_guoqi_num']}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><a href="{:url('Admin/Group/exchangeList')}">通用券已兑换总数量</a></td>
+                            <td><a href="{:url('Admin/Group/exchangeList')}">{$data['verify_exchange_num']}</a></td>
+                            <td><a href="{:url('Admin/Group/exchangeList')}">昨日兑换总数</a></td>
+                            <td><a href="{:url('Admin/Group/exchangeList')}">{$data['yesterday_exchange_num']}</a></td>
+                            <td><a href="{:url('Admin/Group/exchangeList')}">今日兑换总数</a></td>
+                            <td><a href="{:url('Admin/Group/exchangeList')}">{$data['today_exchange_num']}</a></td>
+                            <td><a href="{:url('Admin/Group/verify',array('status'=>3))}">通用券正在兑换数</a></td>
+                            <td><a href="{:url('Admin/Group/verify',array('status'=>3))}">{$data['trade_verify_num']}</a></td>
+                        </tr>
+                        
+                        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   
+</div>
+{/block}

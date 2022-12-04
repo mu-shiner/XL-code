@@ -1,0 +1,82 @@
+{extend name='public:parent'}
+
+{block name="right"}
+<link href="{$Think.config.web_root}/plugins/wysiwyg/css/wysiwyg-editor.css" rel="stylesheet">
+<link href="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/css/fileinput.css" rel="stylesheet">
+<link href="{$Think.config.web_root}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<style>
+    .file_image {margin-left: 15px;}
+    .form-control {
+        height: auto;
+    }
+</style>
+
+<div id="content-container" class="goods_container">
+    <div class="div_local">
+        <ol class="breadcrumb">
+            <li><a href="/admin/Index/index">首页</a></li>
+            <li><a href="#">提现管理</a></li>
+            <li class="active">编辑</li>
+        </ol>
+    </div>
+    <div id="add_container">
+        <form action="{:url('Withdrawconfig/edit')}" class="form-horizontal"  enctype="multipart/form-data"   method="post" onsubmit="return checkValid(this)"  >
+            <div class="form-group">
+                <label for="withdraw_rate" class="col-sm-2 control-label">提现手续费费率</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control txt_250" id="withdraw_rate" name="withdraw_rate" value = "{$info.withdraw_rate|default = 0}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="min_price" class="col-sm-2 control-label">最小提现金额</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control txt_250" id="min_price" name="min_price" value = "{$info.min_price|default = 0}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="coin_rate" class="col-sm-2 control-label">消耗金币比例</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control txt_250" id="coin_rate" name="coin_rate" value = "{$info.coin_rate|default = 0}">
+                </div>
+            </div>
+            <input name="id" value="{$info['id']}" type="hidden">
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn  btn_submit">保存</button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/js/fileinput.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/wysiwyg.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/wysiwyg-editor.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/demo.js"></script>
+
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<script>
+
+
+    //验证
+    function checkValid(obj) {
+        var jifen = $("jifen").val();
+        var rate = $('rate').val();
+        if(jifen <0){
+            layer.alert("积分比例不能为负");
+        }
+        if(rate <0){
+            layer.alert("手续费费率不能为负");
+        }
+        return true;
+    }
+
+
+
+</script>
+
+{/block}

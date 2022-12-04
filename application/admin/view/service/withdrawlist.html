@@ -1,0 +1,71 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Index/index">首页</a></li>
+                <li><a href="#">服务中心理</a></li>
+                <li class="active">提现列表</li>
+            </ol>
+        </div>
+        <div class="cf">
+            <form class="form-inline" action="" method="get">
+               
+                <label class="inline">服务中心名称</label>
+                <input type="text" name="servicename" value="" class="form-control">
+                <label class="inline">提现方式</label>
+                    <select name="withdraw_type" class="form-control">
+                        <option value="">--全部--</option>
+                        <option value="bank">--银行卡--</option>
+                        <option value="alipay">--支付宝--</option>
+                        <option value="wx">--微信--</option>
+                    </select>
+                
+                <button type="submit" class="btn btn-purple btn-sm">
+                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                    搜索
+                </button>
+            </form>
+        </div>
+        <div class="goods_content" style="margin-top:20px">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>服务中心名称</th>
+                        <th>提现姓名</th>
+                        <th>提现方式</th>
+                        <th>提现帐号</th>
+                        <th>提现金额</th>
+                        <th>实际到账</th>
+                        <th>提现时间</th>
+                        <th>到账时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$list" item="vo"}
+                <tr>
+                    <td>{$vo['id']}</td>
+                    <td>{$vo['service_name']}</td>
+                    <td>{$vo['real_name']}</td>
+                    <td>{$vo['entryType']}</td>
+                    <td>{$vo['accountNo']}</td>
+                    <td>{$vo['withdraw_price']}</td>
+                    <td>{$vo['poundage']}</td>
+                    <td>{$vo['create_time']}</td>
+                    <td>{$vo['fail_time']}</td>
+                    <td>{$vo['status_name']}</td>
+                    <td>
+                    
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+{/block}

@@ -1,0 +1,40 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <div id="content-container">
+    <div class="col-sm-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">服务器配置</h3>
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <td>网站域名</td>
+                            <td>{$_SERVER['HTTP_HOST']}</td>
+                        </tr>
+                        <tr>
+                            <td>网站目录</td>
+                            <td>{$_SERVER['DOCUMENT_ROOT']}</td>
+                        </tr>
+                        <tr>
+                            <td>服务器端口</td>
+                            <td>{$_SERVER['SERVER_PORT']}</td>
+                        </tr>
+                        <tr>
+                            <td>服务器环境</td>
+                            <td>{$_SERVER['SERVER_SOFTWARE']}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+{/block}

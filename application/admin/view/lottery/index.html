@@ -1,0 +1,71 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Index/index">首页</a></li>
+                <li><a href="#">抽奖管理</a></li>
+                <li class="active">抽奖列表</li>
+            </ol>
+        </div>
+        <!--<div class="cf">-->
+        <!--    <form class="form-inline" action="" method="get">-->
+               
+        <!--        <label class="inline">商品名称</label>-->
+        <!--        <input type="text" name="goodsname" value="" class="form-control">-->
+                
+        <!--        <label class="inline">活动状态</label>-->
+        <!--                <select name="status" class="form-control">-->
+        <!--                    <option value="">--全部--</option>-->
+        <!--                    <option value="0">--已下架--</option>-->
+        <!--                    <option value="1">--已上架--</option>-->
+        <!--                    <option value="2">--已结束--</option>-->
+                            
+        <!--                </select>-->
+        <!--        <button type="submit" class="btn btn-purple btn-sm">-->
+        <!--            <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>-->
+        <!--            搜索-->
+        <!--        </button>-->
+        <!--    </form>-->
+        <!--</div>-->
+        <div class="goods_content" style="margin-top:20px">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$list" item="vo"}
+                <tr>
+                    <td>{$vo['lottery_id']}</td>
+                    <td>{$vo['begin_time']}</td>
+                    <td>{$vo['end_time']}</td>
+                    <td>{$vo['state_name']}</td>
+                    <td>
+                    {if $vo['is_open']=='0'}
+                        <a  type="button" class="btn btn-success  btn-xs btn-rounded"  href="{:url('Admin/Lottery/edit',array('id'=>$vo['lottery_id']))}">  编辑  </a>
+                        <a  type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/Lottery/editLottery',array('id'=>$vo['lottery_id'],'is_open'=>1))}">  上架  </a>
+                        <!--<a  type="button" class="btn btn-danger  btn-xs btn-rounded"  href="javascript:if(confirm('确认删除这活动？'))location='{:url('Admin/Lottery/delLottery',array('id'=>$vo['Lottery_id']))}'">  删除  </a>-->
+                    {/if}
+                    {if $vo['is_open']=='1'}
+                        <a type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/Lottery/editLottery',array('id'=>$vo['lottery_id'],'is_open'=>0))}">  下架  </a>
+                    {/if}
+                    
+                     
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+                
+            </table>
+            {$list->render()}
+        </div>
+
+    </div>
+{/block}

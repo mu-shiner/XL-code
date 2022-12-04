@@ -1,0 +1,231 @@
+{extend name='public:parent'}
+
+{block name="right"}
+<style>
+.maskLayer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 1000;
+    display: none;
+    /*opacity: 0.3;*/
+}
+    .send {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 30%;
+        height: 300px;
+        background: #fff;
+        border-radius: 20px;
+    }
+    .sendMessage {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid  #909399;
+        font-size: 22px;
+        line-height: 50px;
+        text-align: center;
+    }
+    .sendLogistics {
+        width: 100%;
+        height: 50px;
+        padding-left: 20px;
+        margin-bottom: 20px;
+    }
+    .sendLogistics span {
+        margin-right: 10px;
+    }
+    .sendLogistics input {
+        height: 30px;
+        border: 1px solid #909399;
+        /*outline: #909399 solid 1px ;*/
+        outline: none;
+    }
+    .sendLogistics input:focus {
+        border: 1px solid #909399;
+    }
+    .sendLogistics select {
+        width: 170px;
+        height: 30px;
+        text-align: center;
+        outline: none;
+    }
+    .sendLogistics select:focus {
+        border: 1px solid #909399;
+    }
+    .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .confirm {
+        width: 70px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #409EFF;
+        margin-right: 50px;
+    }
+    .cancel {
+        width: 70px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #606266;
+    }
+</style>
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Admin/index">首页</a></li>
+                <li><a href="#">拼团管理</a></li>
+                <li class="active">发货管理</li>
+            </ol>
+        </div>
+        <div class="cf">
+            <form class="form-inline" action="" method="get">
+               
+                <label class="inline">商品名称</label>
+                <input type="text" name="goodsname" value="" class="form-control">
+                
+                <label class="inline">活动状态</label>
+                        <select name="status" class="form-control">
+                            <option value="">--全部--</option>
+                            <option value="0">--未支付--</option>
+                            <option value="1">--待发货--</option>
+                            <option value="2">--已发货--</option>
+                            <option value="3">--已签收--</option>
+                        </select>
+                <button type="submit" class="btn btn-purple btn-sm">
+                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                    搜索
+                </button>
+            </form>
+        </div>
+        <div class="goods_content" style="margin-top:20px">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>商品名称</th>
+                        <th>商品图片</th>
+                        <th>商品价格</th>
+                        <th>拼团价格</th>
+                        <th>用户</th>
+                        <th>收货人及电话</th>
+                        <th>收货地址</th>
+                        <th>拼团时间</th>
+                        <th>发货时间</th>
+                        <th>签收时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$list" item="vo"}
+                <tr>
+                    <td>{$vo['order_id']}</td>
+                    <td>{$vo['goods_name']}</td>
+                    <td><img id="goods_img" style="height:40px;" src="{$vo['goods_img']}" /></td>
+                    <td>{$vo['goods_price']}</td>
+                    <td>{$vo['order_price']}</td>
+                    <td>{$vo['username']}</td>
+                    <td>{$vo['receipt_name']}{$vo['telephone']}</td>
+                    <td>{$vo['complete_address']}</td>
+                    <td>{$vo['create_time']}</td>
+                    <td>{$vo['ship_time']}</td>
+                    <td>{$vo['receipt_time']}</td>
+                    <td>{$vo['state_name']}</td>
+                    <td>
+                        <!--<a  type="button" class="btn btn-safe  btn-xs btn-rounded"  href="{:url('Admin/Group/edit',array('id'=>$vo['order_id']))}">  查看  </a>-->
+                        {if $vo['order_status']=='1'}
+                        <div onclick="send({$vo['order_id']})" type="button" class="btn btn-warning  btn-xs btn-rounded">  发货  </div>
+                        {/if}
+                     
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+                
+            </table>
+            {$list->render()}
+        </div>
+     
+     <div class="maskLayer" id="modal">
+         <div class="send">
+          <div class="sendMessage">发货信息</div>
+          <div>
+              <div class="sendLogistics">
+                  <span>发货物流</span>
+                  <!--<input type="select" name="" id="" value="" />-->
+                  <select id="sendSelect">
+                      <option>--请选择发货物流--</option>
+                      <option>顺丰</option>
+                      <option>极兔</option>
+                      <option>中通</option>
+                      <option>圆通</option>
+                      <option>韵达</option>
+                      <option>邮政</option>
+                      <option>京东</option>
+                  </select>
+              </div>
+              <div class="sendLogistics">
+                  <span>发货单号</span>
+                  <input type="tetx" name="" id="sendLogistics" value="" />
+              </div>
+              <div class="button">
+                  <div class="confirm" onclick="confirm()">确认</div>
+                  <div class="cancel" onclick="cancel()">取消</div>
+              </div>
+              <input type="hidden" name=""  id="hiddenId" value="" />
+          </div>
+      </div>
+     </div>   
+      
+    </div>
+    
+    
+
+    <script type="text/javascript" charset="utf-8">
+        function send (id) {
+            $('#hiddenId').val(id);
+            $('#modal').css('display','block');
+        }
+        function cancel () {
+            $('#modal').css('display','none');
+        }
+        
+        function confirm () {
+            
+        $.ajax('delivery', {
+            method: 'POST',
+            data: {logisticsCompany: $('#sendSelect').val(), logisticsNo: $('#sendLogistics').val(), id:$('#hiddenId').val()},
+            success:function (result) {
+                alert(result.msg)
+                if(result.code == 0)
+                {
+                    location.href= 'groupShip';
+                }
+               
+            },
+            error:function (err) {
+                console.log(err);
+            }
+        })
+        }
+    </script>
+{/block}

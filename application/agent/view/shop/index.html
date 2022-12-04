@@ -1,0 +1,59 @@
+{extend name='public:parent'}
+
+{block name="right"}
+
+    <div id="content-container" class="shop_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Admin/index">首页</a></li>
+                <li><a href="#">商家管理</a></li>
+                <li class="active">店铺列表</li>
+            </ol>
+        </div>
+
+        <div class="shop_content">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>店铺名称</th>
+                        <th>店铺图片</th>
+                        <th>创建时间</th>
+                        <th>店铺状态</th>
+                        <th>店铺地址</th>
+                        <th>核销类型</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$shoplist" item="vo"}
+                <tr>
+                    <td>{$vo['shop_id']}</td>
+                    <td>{$vo['shop_name']}</td>
+                    <td><img id="shop_img" style="height:40px;" src="{$vo['logo']}" /></td>
+                    <td>{$vo['create_time']}</td>
+                    <td>{$vo['state_name']}</td>
+                    <td>{$vo['province_name']}{$vo['city_name']}{$vo['district_name']}{$vo['address']}</td>
+                    <td>{$vo['type_name']}</td>
+                    <td>
+                    {if $vo['shop_status']!='2' && $vo['shop_status']!='0'}
+                    <a  type="button" class="btn btn-success  btn-xs btn-rounded"  href="{:url('Admin/shop/edit',array('id'=>$vo['shop_id']))}">  查看  </a>
+                    {/if}
+                    {if $vo['shop_status']=='2'}
+                        <a type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/shop/edit',array('id'=>$vo['shop_id'],'state'=>1))}">  审核  </a> 
+                    {/if}
+                    {if $vo['take_down']=='0'}
+                        <a  type="button" class="btn btn-danger  btn-xs btn-rounded"  href="javascript:if(confirm('确认下架这店铺？'))location='{:url('Admin/shop/editShop',array('id'=>$vo['shop_id'],'take_down'=>1))}'">  下架  </a>
+                    {else}
+                        <a  type="button" class="btn btn-danger  btn-xs btn-rounded"  href="javascript:if(confirm('确认上架这店铺？'))location='{:url('Admin/shop/editShop',array('id'=>$vo['shop_id'],'take_down'=>0))}'">  上架  </a>
+                    {/if}
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            {$shoplist->render()}
+        </div>
+
+    </div>
+{/block}

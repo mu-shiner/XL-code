@@ -1,0 +1,178 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <link href="{$Think.config.web_root}/plugins/wysiwyg/css/wysiwyg-editor.css" rel="stylesheet">
+    <link href="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/css/fileinput.css" rel="stylesheet">
+    <link href="{$Think.config.web_root}/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+<style>
+    .file_image {margin-left: 15px;}
+    .form-control {
+        height: auto;
+    }
+</style>
+
+<div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Admin/index">首页</a></li>
+                <li><a href="#">抽奖管理</a></li>
+                <li class="active">编辑抽奖</li>
+            </ol>
+        </div>
+        <div id="add_container">
+            <form action="{:url('lottery/lotteryAdd')}" class="form-horizontal"  enctype="multipart/form-data"   method="post" onsubmit="return checkValid(this)"  >
+                
+              
+              
+                <div class="form-group">
+                    <label for="signup_time" class="col-sm-2 control-label">抽奖时间</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="begin_time" value="{$info['begin_time']}" id="datetimepicker1">
+                        <span> - </span>
+                        <input type="text" name="end_time" value="{$info['end_time']}" id="datetimepicker2">
+                    </div>
+                </div>
+                
+                {foreach name="$list" item="v"}
+                <div class="form-group">
+                    <label for="one_goods_id" class="col-sm-2 control-label">奖品:</label>
+                    <div class="col-sm-4" style="display: flex;">
+                        <select  class="form-control select_120"  name="goods_id[]">
+                            {foreach name="$goodslist" item="vo"}
+                            <option value="{$vo['id']}" {if($v['goods_id'] == $vo['id'])}selected="selected"{/if}>{$vo['goods_name']}</option>
+                            {/foreach}
+                        </select>
+                        <label for="goods_num" class="col-sm-2 control-label">数量</label>
+                        <div class="col-sm-10" >
+                            <input type="number" class="form-control txt_250" name="goods_num[]" value="{$v['goods_num']}">
+                        </div>
+                    </div>
+                </div>
+                {/foreach}
+                <!--<div class="form-group">-->
+                <!--    <label for="two_goods_id" class="col-sm-2 control-label">二等奖:</label>-->
+                <!--    <div class="col-sm-4" style="display: flex;">-->
+                <!--        <select  class="form-control select_120" name="goods_id[]">-->
+                <!--            {foreach name="$goodslist" item="vo"}-->
+                <!--            <option value="{$vo['id']}">{$vo['goods_name']}</option>-->
+                <!--            {/foreach}-->
+                <!--        </select>-->
+                <!--        <label for="two_goods_num" class="col-sm-2 control-label">数量</label>-->
+                <!--        <div class="col-sm-10" >-->
+                <!--            <input type="number" class="form-control txt_250" name="goods_num[]">-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</div>-->
+                
+                <!--<div class="form-group">-->
+                <!--    <label for="three_goods_id" class="col-sm-2 control-label">三等奖:</label>-->
+                <!--    <div class="col-sm-4" style="display: flex;">-->
+                <!--        <select  class="form-control select_120" name="goods_id[]">-->
+                <!--            {foreach name="$goodslist" item="vo"}-->
+                <!--            <option value="{$vo['id']}">{$vo['goods_name']}</option>-->
+                <!--            {/foreach}-->
+                <!--        </select>-->
+                <!--        <label for="three_goods_num" class="col-sm-2 control-label">数量</label>-->
+                <!--        <div class="col-sm-10" >-->
+                <!--            <input type="number" class="form-control txt_250" name="goods_num[]">-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</div>-->
+                
+                <!--<div class="form-group">-->
+                <!--    <label for="four_goods_id" class="col-sm-2 control-label">四等奖:</label>-->
+                <!--    <div class="col-sm-4" style="display: flex;">-->
+                <!--        <select  class="form-control select_120" name="goods_id[]">-->
+                <!--            {foreach name="$goodslist" item="vo"}-->
+                <!--            <option value="{$vo['id']}">{$vo['goods_name']}</option>-->
+                <!--            {/foreach}-->
+                <!--        </select>-->
+                <!--        <label for="four_goods_num" class="col-sm-2 control-label">数量</label>-->
+                <!--        <div class="col-sm-10" >-->
+                <!--            <input type="number" class="form-control txt_250" name="goods_num[]">-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</div>-->
+                
+                <!-- <div class="form-group">-->
+                <!--    <label for="five_goods_id" class="col-sm-2 control-label">五等奖:</label>-->
+                <!--    <div class="col-sm-4" style="display: flex;">-->
+                <!--        <select  class="form-control select_120" name="goods_id[]">-->
+                <!--            {foreach name="$goodslist" item="vo"}-->
+                <!--            <option value="{$vo['id']}">{$vo['goods_name']}</option>-->
+                <!--            {/foreach}-->
+                <!--        </select>-->
+                <!--        <label for="five_goods_num" class="col-sm-2 control-label">数量</label>-->
+                <!--        <div class="col-sm-10" >-->
+                <!--            <input type="number" class="form-control txt_250" name="goods_num[]">-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</div>-->
+                
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn  btn_submit">保存</button>
+                    </div>
+                </div>
+               
+                <input type="hidden"  name="lottery_id" value="{$info['lottery_id']}">
+            </form>
+        </div>
+    </div>
+
+<script type="text/javascript" src="{$Think.config.web_root}/bootstrap-3.3.5/fileinput/js/fileinput.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/wysiwyg.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/wysiwyg-editor.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/wysiwyg/js/demo.js"></script>
+
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/bootstrap-timepicker/locales/bootstrap-timepicker.zh-CN.js"></script>
+
+<script>
+    $('#datetimepicker1').timepicker({
+        format: 'hh:ii',
+        language: 'zh-CN',
+        showMeridian: false
+    });
+    $('#datetimepicker2').timepicker({
+        format: 'hh:ii',
+        language: 'zh-CN',
+        showMeridian: false
+    });
+    
+ 
+    
+    //验证
+    // function checkValid(obj) {
+    //     var signup_num = $("#signup_num").val();
+    //     var signup_price = $("#signup_price").val();
+    //     var max_price = $("#max_price").val();
+        
+    //     if (signup_num <= 0){
+    //         layer.alert('报名人数不能为空！');
+    //         return false;
+    //     }
+    //     if (signup_price <= 0){
+    //         layer.alert('报名价格不能为空！');
+    //         return false;
+    //     }
+    //     if (max_price <= 0){
+    //         layer.alert('封顶价格不能为空！');
+    //         return false;
+    //     }
+    //     return true;
+    // }
+
+    // function changeVal(obj) {
+    //     var val = $(obj).val();
+    //     if (val == 1){
+    //         $(obj).val(0);
+    //     }else{
+    //         $(obj).val(1);
+    //     }
+    // }
+
+
+</script>
+
+{/block}

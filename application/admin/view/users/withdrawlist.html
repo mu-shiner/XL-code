@@ -1,0 +1,230 @@
+{extend name='public:parent'}
+
+{block name="right"}
+<style>
+    .maskLayer {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.3);
+        z-index: 1000;
+        display: none;
+        /*opacity: 0.3;*/
+    }
+    .send {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 30%;
+        height: 300px;
+        background: #fff;
+        border-radius: 20px;
+    }
+    .sendMessage {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid  #909399;
+        font-size: 22px;
+        line-height: 50px;
+        text-align: center;
+    }
+    .sendLogistics {
+        width: 100%;
+        height: 50px;
+        padding-left: 20px;
+        margin-bottom: 20px;
+    }
+    .sendLogistics span {
+        margin-right: 10px;
+    }
+    .sendLogistics input {
+        height: 30px;
+        border: 1px solid #909399;
+        /*outline: #909399 solid 1px ;*/
+        outline: none;
+    }
+    .sendLogistics input:focus {
+        border: 1px solid #909399;
+    }
+    .sendLogistics select {
+        width: 170px;
+        height: 30px;
+        text-align: center;
+        outline: none;
+    }
+    .sendLogistics select:focus {
+        border: 1px solid #909399;
+    }
+    .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .confirm {
+        width: 70px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #409EFF;
+        margin-right: 50px;
+    }
+    .cancel {
+        width: 70px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #606266;
+    }
+</style>
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Admin/index">首页</a></li>
+                <li><a href="#">会员管理</a></li>
+                <li class="active">提现列表</li>
+            </ol>
+        </div>
+        <div class="cf">
+            <form class="form-inline" action="" method="get">
+               
+                <label class="inline">会员名称</label>
+                <input type="text" name="username" value="" class="form-control">
+                <label class="inline">提现类型</label>
+                    <select name="type" class="form-control">
+                        <option value="">--全部--</option>
+                        <option value="1">--积分--</option>
+                        <option value="2">--余额--</option>
+                        <option value="3">--分红--</option>
+                    </select>
+                <label class="inline">提现方式</label>
+                    <select name="withdraw_type" class="form-control">
+                        <option value="">--全部--</option>
+                        <option value="bank">--银行卡--</option>
+                        <option value="alipay">--支付宝--</option>
+                        <option value="wx">--微信--</option>
+                    </select>
+                <label class="inline">提现状态</label>
+                    <select name="status" class="form-control">
+                        <option value="">--全部--</option>
+                        <option value="-1">--未通过--</option>
+                        <option value="0">--审核中--</option>
+                        <option value="2">--审核通过--</option>
+                    </select>
+                
+                <button type="submit" class="btn btn-purple btn-sm">
+                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                    搜索
+                </button>
+            </form>
+        </div>
+        <div class="goods_content" style="margin-top:20px">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>会员名称</th>
+                        <th>真实姓名</th>
+                        <th>提现类型</th>
+                        <th>提现方式</th>
+                        <th>提现帐号</th>
+                        <th>提现金额</th>
+                        <th>实际到账</th>
+                        <th>提现时间</th>
+                        <th>到账时间</th>
+                        <th>状态</th>
+                        <th>审核提现结果</th>
+                        <!--<th>操作</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$list" item="vo"}
+                <tr>
+                    <td>{$vo['id']}</td>
+                    <td>{$vo['username']}</td>
+                    <td>{$vo['real_name']}</td>
+                    <td>{$vo['type_name']}</td>
+                    <td>{$vo['entryType']}</td>
+                    <td>{$vo['accountNo']}</td>
+                    <td>{$vo['withdraw_price']}</td>
+                    <td>{$vo['poundage']}</td>
+                    <td>{$vo['create_time']}</td>
+                    <td>{$vo['fail_time']}</td>
+                    <td>{$vo['status_name']}</td>
+                    <td>
+                        <!--<a  type="button" class="btn btn-safe  btn-xs btn-rounded"  href="{:url('Admin/Group/edit',array('id'=>$vo['order_id']))}">  查看  </a>-->
+                        {if $vo['status']=='0'}
+                        <div onclick="send({$vo['id']})" type="button" class="btn btn-warning  btn-xs btn-rounded">  审核提现结果  </div>
+                        {/if}
+
+                    </td>
+                    
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+             {$list->render()}
+        </div>
+        <div class="maskLayer" id="modal">
+            <div class="send">
+                <div class="sendMessage">打款结果</div>
+                <div>
+                    <div class="sendLogistics">
+                        <!--<input type="select" name="" id="" value="" />-->
+                        <select id="sendSelect">
+                            <option>--请选择打款结果--</option>
+                            <option value="2">成功</option>
+                            <option value="-1">失败</option>
+                        </select>
+                    </div>
+                    <div class="button">
+                        <div class="confirm" onclick="confirm()">确认</div>
+                        <div class="cancel" onclick="cancel()">取消</div>
+                    </div>
+                    <input type="hidden" name=""  id="hiddenId" value="" />
+                </div>
+            </div>
+        </div>
+        <script>
+            function send (id) {
+                $('#hiddenId').val(id);
+                $('#modal').css('display','block');
+            }
+            function cancel () {
+                $('#modal').css('display','none');
+            }
+            function confirm () {
+
+                $.ajax('checkWithDraw', {
+                    method: 'POST',
+                    data: {status: $('#sendSelect').val(), id:$('#hiddenId').val()},
+                    success:function (result) {
+                        alert(result.msg)
+                        if(result.code == 0)
+                        {
+                            // location.href= 'index';
+                        }else{
+                            location.href = 'userswithdrawlist'+location.search;
+                        }
+
+                    },
+                    error:function (err) {
+                        console.log(err);
+                    }
+                })
+            }
+        </script>
+    </div>
+    </div>
+{/block}

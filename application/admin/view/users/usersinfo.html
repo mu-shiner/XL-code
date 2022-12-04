@@ -1,0 +1,67 @@
+{extend name='public:parent'}
+
+{block name="right"}
+<div id="content-container">
+    <div class="col-sm-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">用户统计</h3>
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tbody style="font-size:15px">
+                        <tr>
+                            <td>用户名</td>
+                            <td>{$data['username']}</td>
+                            <td>当前余额</td>
+                            <td>{$data['balance_money']}</td>
+                            <td>当前积分</td>
+                            <td>{$data['point']}</td>
+                            <td>当前分红</td>
+                            <td>{$data['partner_money']}</td>
+                        </tr>
+                        <tr>
+                            <td>订单线上支付总额</td>
+                            <td>{$data['order_price']}</td>
+                            <td>总充值余额</td>
+                            <td>{$data['user_price']}</td>
+                            <td>余额提现</td>
+                            <td>{$data['money_withdra']}</td>
+                            <td>积分提现</td>
+                            <td>{$data['point_withdra']}</td>
+                        </tr>
+
+                        <tr>
+                            <td>分红提现</td>
+                            <td>{$data['partner_withdra']}</td>
+                            <td>已核销券数</td>
+                            <td>{$data['verify_num']}</td>
+                            <td>已兑换券数</td>
+                            <td>{$data['duihuan_verify_num']}</td>
+                            <td>已过期券数</td>
+                            <td>{$data['guoqi_verify_num']}</td>
+                        </tr>
+                        <tr>
+                            <td>剩余券数</td>
+                            <td>{$data['sy_verify_num']}</td>
+                            <td>正在兑换券数</td>
+                            <td>{$data['dh_verify_num']}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{/block}

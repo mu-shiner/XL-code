@@ -1,0 +1,39 @@
+<?php
+namespace app\common\controller;
+use app\common\controller\Base;
+use think\Db;
+use think\Request;
+/**
+ * agent 基类控制器
+ */
+class AgentBase extends Base{ 
+	/**
+	 * 初始化方法
+	 */
+	public function _initialize(){
+		parent::_initialize();
+		$auth=new \think\Auth();
+		$request = Request::instance();
+		$m=$request->module();
+		$c=$request->controller();
+		$a=$request->action();
+		$rule_name=$m.'/'.$c.'/'.$a;
+        //var_dump($rule_name);die;
+        $is_manager = session('user')['is_manager']; //是否为超级管理员
+        if ($is_manager != 1){
+            $result=$auth->check($rule_name,session('user')['id']);
+            if(!$result){
+                if(!session('user'))
+                {
+                    $this->error('未登录','Agent/Index/index');
+                }
+                $this->error('您没有权限访问');
+            }
+        }
+	}
+
+
+
+
+}
+

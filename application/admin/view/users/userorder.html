@@ -1,0 +1,70 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Admin/index">首页</a></li>
+                <li><a href="#">会员管理</a></li>
+                <li class="active">订单列表</li>
+            </ol>
+        </div>
+        <div class="cf">
+            <form class="form-inline" action="" method="get">
+               
+                <label class="inline">会员名称</label>
+                <input type="text" name="username" value="" class="form-control">
+                <label class="inline">订单类型</label>
+                    <select name="type" class="form-control">
+                        <option value="">--全部--</option>
+                        <option value="0">--余额充值--</option>
+                        <option value="1">--成为合伙人--</option>
+                    </select>
+                <label class="inline">支付方式</label>
+                    <select name="pay_type" class="form-control">
+                        <option value="">--全部--</option>
+                        <option value="1">--支付宝--</option>
+                        <option value="2">--微信--</option>
+                    </select>
+                
+                <button type="submit" class="btn btn-purple btn-sm">
+                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                    搜索
+                </button>
+            </form>
+        </div>
+        <div class="goods_content" style="margin-top:20px">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>会员名称</th>
+                        <th>订单类型</th>
+                        <th>支付方式</th>
+                        <th>订单金额</th>
+                        <th>创建时间</th>
+                        <th>支付时间</th>
+                        <th>经纬度</th>
+                        <!--<th>操作</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$list" item="vo"}
+                <tr>
+                    <td>{$vo['order_id']}</td>
+                    <td>{$vo['username']}</td>
+                    <td>{$vo['type_name']}</td>
+                    <td>{$vo['payType']}</td>
+                    <td>{$vo['order_price']}</td>
+                    <td>{$vo['create_time']}</td>
+                    <td>{$vo['pay_time']}</td>
+                    <td>{$vo['jingwei']}</td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+             {$list->render()}
+        </div>
+
+    </div>
+{/block}

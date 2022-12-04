@@ -1,0 +1,41 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Admin/index">首页</a></li>
+                <li><a href="#">会员管理</a></li>
+                <li class="active">分销配置</li>
+            </ol>
+        </div>
+       
+        <div class="goods_content" style="margin-top:20px">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>配置项目</th>
+                        <th>一级比例</th>
+                        <th>二级比例</th>
+                        <th>三级比例</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$list" item="vo"}
+                <tr>
+                    <td>{$vo['config_name']}</td>
+                    <td>{$vo['rate_one']}</td>
+                    <td>{$vo['rate_two']}</td>
+                    <td>{$vo['rate_three']}</td>
+                    <td>
+                      <a  type="button" class="btn btn-safe  btn-xs btn-rounded"  href="{:url('Admin/Users/configedit',array('id'=>$vo['config_id']))}">  修改  </a>
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+{/block}

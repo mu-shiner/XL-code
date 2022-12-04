@@ -1,0 +1,54 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Index/index">首页</a></li>
+                <li><a href="#">会员管理</a></li>
+                <li class="active">合伙人列表</li>
+            </ol>
+        </div>
+        
+        <div class="goods_content" style="margin-top:20px">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>会员名称</th>
+                        <th>会员头像</th>
+                        <th>手机号</th>
+                        <th>上级</th>
+                        <th>注册时间</th>
+                        <th>余额</th>
+                        <th>积分</th>
+                        <th>状态</th>
+                        <th>积分提现额度</th>
+                        <th>合伙人积分</th>
+                        <th>核销券</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$list" item="vo"}
+                <tr>
+                    <td>{$vo['users_id']}</td>
+                    <td>{$vo['username']}</td>
+                    <td><img id="goods_img" style="height:40px;" src="{$vo['avatar']}" /></td>
+                    <td>{$vo['phone']}</td>
+                    <td>{$vo['parent_name']}</td>
+                    <td>{$vo['reg_time']}</td>
+                    <td>{$vo['balance_money']}</td>
+                    <td>{$vo['point']}</td>
+                    <td>{$vo['status_name']}</td>
+                    <td>{$vo['partner_withdraw_amount']}</td>
+                    <td>{$vo['partner_money']}</td>
+                    <td>{$vo['verify_num']}</td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            {$list->render()}
+        </div>
+
+    </div>
+{/block}

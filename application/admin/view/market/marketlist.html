@@ -1,0 +1,74 @@
+{extend name='public:parent'}
+
+{block name="right"}
+<div id="content-container" class="goods_container">
+    <div class="div_local">
+        <ol class="breadcrumb">
+            <li><a href="/admin/Index/index">首页</a></li>
+            <li><a href="#">市场管理</a></li>
+            <li class="active">交易列表</li>
+        </ol>
+    </div>
+    <div class="cf">
+        <form class="form-inline" action="" method="get">
+            <!--<input type="text" name="goodsname" value="" class="form-control">-->
+
+            <label class="inline">交易状态</label>
+                    <select name="status" class="form-control">
+                        <option value="">--全部--</option>
+                        <option value="1">--交易中--</option>
+                        <option value="2">--交易成功--</option>
+                        <option value="3">--交易失败--</option>
+
+                    </select>
+            <button type="submit" class="btn btn-purple btn-sm">
+                <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                搜索
+            </button>
+        </form>
+    </div>
+    <div class="goods_content" style="margin-top:20px">
+        <table class="table table-bordered ">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>卖家昵称</th>
+                <th>数量</th>
+                <th>上架时间</th>
+                <th>单价</th>
+                <th>总价</th>
+                <th>买家昵称</th>
+                <th>完成时间</th>
+                <th>商品名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name="$list" item="vo"}
+            <tr>
+                  <td>{$vo['market_id']|default =""}</td>
+                <td>{$vo['user']['username']|default =""}</td>
+                <td>{$vo['num']}</td>
+                <td>{$vo['create_time']}</td>
+                <td>{$vo['unit_price']}</td>
+                <td>{$vo['price']}</td>
+                <td>{$vo['receiveUser']['username']|default = ""}</td>
+                <td>{:date("Y-m-d H:i:s",$vo['finish_time'])}</td>
+                <td>{$vo['goods']['goods_name']|default=''}</td>
+                <td>
+                    {if $vo['status']=='1'}
+                    <a type="button" class="btn btn-warning  btn-xs btn-rounded"
+                       href="javascript:if(confirm('确认回收？'))location='{:url('Admin/market/automaticBuy',array('market_id'=>$vo['market_id']))}'">
+                        回收 </a>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+
+        </table>
+        {$list->render()}
+    </div>
+
+</div>
+{/block}

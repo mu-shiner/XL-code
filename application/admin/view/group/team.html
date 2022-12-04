@@ -1,0 +1,94 @@
+{extend name='public:parent'}
+
+{block name="right"}
+<link href="{$Think.config.web_root}/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<style>
+
+</style>
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Index/index">首页</a></li>
+                <li><a href="#">团购管理</a></li>
+                <li class="active">用户团购</li>
+            </ol>
+        </div>
+        <div class="cf">
+            <form class="form-inline" action="" method="get">
+                
+                <label class="inline">团购状态</label>
+                        <select name="status" class="form-control">
+                            <option value="">--全部--</option>
+                            <option value="0">--团购中--</option>
+                            <option value="1">--已成团--</option>
+                            <option value="2">--已失败--</option>
+                        </select>
+                    <label class="inline">成团时间</label>
+                    <div class="form-control">
+                        <input type="text" name="begin_time" value="" id="datetimepicker1">
+                        <span> - </span>
+                        <input type="text" name="end_time" value="" id="datetimepicker2">
+                    </div>
+               
+                <button type="submit" class="btn btn-purple btn-sm">
+                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                    搜索
+                </button>
+            </form>
+        </div>
+        <div class="goods_content" style="margin-top:20px">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>商品名称</th>
+                        <th>商品图片</th>
+                        <th>团购价格</th>
+                        <th>成团人数</th>
+                        <th>中奖人数</th>
+                        <th>创建时间</th>
+                        <th>成团时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$list" item="vo"}
+                <tr>
+                    <td>{$vo['team_id']}</td>
+                    <td>{$vo['goods_name']}</td>
+                    <td><img id="goods_img" style="height:40px;" src="{$vo['goods_img']}" /></td>
+                    <td>{$vo['price']}</td>
+                    <td>{$vo['team_num']}</td>
+                    <td>{$vo['get_num']}</td>
+                    <td>{$vo['create_time']}</td>
+                    <td>{$vo['success_time']}</td>
+                    <td>{$vo['state_name']}</td>
+                    <td>
+                        <a  type="button" class="btn btn-success  btn-xs btn-rounded"  href="{:url('Admin/Group/teaminfo',array('id'=>$vo['team_id']))}">  详情  </a>
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+                
+            </table>
+            {$list->render()}
+        </div>
+     
+   
+      
+    </div>
+    
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="{$Think.config.web_root}/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script>
+    $('#datetimepicker1').datepicker({
+        format: 'yyyy-mm-dd',
+        language: 'zh-CN',
+    });
+    $('#datetimepicker2').datepicker({
+        format: 'yyyy-mm-dd',
+        language: 'zh-CN',
+    });
+</script>
+{/block}

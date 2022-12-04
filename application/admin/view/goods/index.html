@@ -1,0 +1,65 @@
+{extend name='public:parent'}
+
+{block name="right"}
+
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Index/index">首页</a></li>
+                <li><a href="#">商品管理</a></li>
+                <li class="active">商品列表</li>
+            </ol>
+        </div>
+
+        <div class="goods_content">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>商品名称</th>
+                        <th>商品图片</th>
+                        <th>价格</th>
+                        <th>创建时间</th>
+                        <th>商品状态</th>
+                        <th>商品类型</th>
+                        <th>活动种类</th>
+                        <th>积分奖励</th>
+                        <th>积分兑换金币数量</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$goodslist" item="vo"}
+                <tr>
+                    <td>{$vo['id']}</td>
+                    <td>{$vo['goods_name']}</td>
+                    <td><img id="goods_img" style="height:40px;" src="{$vo['image_url']}" /></td>
+                    <td>{$vo['goods_price']}</td>
+                    <td>{$vo['create_time']}</td>
+                    <td>{$vo['state_name']}</td>
+                    <td>{$vo['class_name']}</td>
+                    <td>{$vo['prize']}</td>
+                    <td>{$vo['jifen']}</td>
+                    <td>{$vo['coin']}</td>
+                    <td>
+                    <a  type="button" class="btn btn-success  btn-xs btn-rounded"  href="{:url('Admin/Goods/edit',array('id'=>$vo['id']))}">  编辑  </a>
+                    {if $vo['goods_state']=='0'}
+                        <a type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/Goods/editGoods',array('id'=>$vo['id'],'state'=>2))}">  发布  </a>
+                    {/if}
+                    {if $vo['goods_state']=='1'}
+                        <a type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/Goods/editGoods',array('id'=>$vo['id'],'state'=>2))}">  下架  </a>
+                    {/if}
+                    {if $vo['goods_state']=='2'}
+                        <a type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/Goods/editGoods',array('id'=>$vo['id'],'state'=>1))}">  上架  </a> 
+                    {/if}
+                     <a  type="button" class="btn btn-danger  btn-xs btn-rounded"  href="javascript:if(confirm('确认删除这商品？'))location='{:url('Admin/Goods/delGoods',array('id'=>$vo['id']))}'">  删除  </a>
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            {$goodslist->render()}
+        </div>
+
+    </div>
+{/block}

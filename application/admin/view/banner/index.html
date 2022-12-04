@@ -1,0 +1,46 @@
+{extend name='public:parent'}
+
+{block name="right"}
+
+<div id="content-container" class="goods_container">
+    <div class="div_local">
+        <ol class="breadcrumb">
+            <li><a href="/admin/Index/index">首页</a></li>
+            <li><a href="#">轮播图管理</a></li>
+            <li class="active">轮播图列表</li>
+        </ol>
+    </div>
+
+    <div class="goods_content">
+        <table class="table table-bordered ">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>图片</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name="$bannerlist" item="vo"}
+            <tr>
+                <td>{$vo['id']}</td>
+                <td><img id="goods_img" style="height:40px;" src="{$vo['img']}" /></td>
+                <td>
+                    <a  type="button" class="btn btn-success  btn-xs btn-rounded"  href="{:url('Admin/Banner/edit',array('id'=>$vo['id']))}">  编辑  </a>
+                    {if $vo['status']==1}
+                    <a type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/Banner/editStatus',array('id'=>$vo['id'],'status'=>0))}">  关闭  </a>
+                    {/if}
+                    {if $vo['status']==0}
+                    <a type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/Banner/editStatus',array('id'=>$vo['id'],'status'=>1))}">  开启  </a>
+                    {/if}
+                    <a  type="button" class="btn btn-danger  btn-xs btn-rounded"  href="javascript:if(confirm('确认删除这商品？'))location='{:url('Admin/Banner/del',array('id'=>$vo['id']))}'">  删除  </a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        {$bannerlist->render()}
+    </div>
+
+</div>
+{/block}

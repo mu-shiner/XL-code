@@ -1,0 +1,75 @@
+{extend name='public:parent'}
+
+{block name="right"}
+    <div id="content-container" class="goods_container">
+        <div class="div_local">
+            <ol class="breadcrumb">
+                <li><a href="/admin/Admin/index">首页</a></li>
+                <li><a href="#">会员管理</a></li>
+                <li class="active">会员列表</li>
+            </ol>
+        </div>
+        <div class="cf">
+            <form class="form-inline" action="" method="get">
+               
+                <label class="inline">会员名称</label>
+                <input type="text" name="username" value="" class="form-control">
+                
+                
+                <button type="submit" class="btn btn-purple btn-sm">
+                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                    搜索
+                </button>
+            </form>
+        </div>
+        <div class="goods_content" style="margin-top:20px">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>会员名称</th>
+                        <th>会员头像</th>
+                        <th>手机号</th>
+                        <th>注册时间</th>
+                        <th>余额</th>
+                        <th>积分</th>
+                        <th>状态</th>
+                        <th>是否合伙人</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach name="$list" item="vo"}
+                <tr>
+                    <td>{$vo['users_id']}</td>
+                    <td>{$vo['username']}</td>
+                    <td><img id="goods_img" style="height:40px;" src="{$vo['avatar']}" /></td>
+                    <td>{$vo['phone']}</td>
+                    <td>{$vo['reg_time']}</td>
+                    <td>{$vo['balance_money']}</td>
+                    <td>{$vo['point']}</td>
+                    <td>{$vo['status_name']}</td>
+                    <td>{$vo['partner']}</td>
+                    <td>
+                    {if $vo['status']=='0'}
+                        <a type="button" class="btn btn-warning  btn-xs btn-rounded" href="{:url('Admin/Users/editUsers',array('id'=>$vo['users_id'],'status'=>1))}">  解封  </a>
+                    {else}
+                        <a type="button" class="btn btn-danger  btn-xs btn-rounded" href="javascript:if(confirm('确认拉黑这用户？'))location='{:url('Admin/Users/editUsers',array('id'=>$vo['users_id'],'status'=>0))}'" >  拉黑  </a>
+                    {/if}
+                    
+                    {if $vo['is_partner']=='0'}
+                        <a type="button" class="btn btn-warning  btn-xs btn-rounded" href="javascript:if(confirm('确认升级这用户？'))location='{:url('Admin/Users/editUsers',array('id'=>$vo['users_id'],'is_partner'=>1))}'">  升为合伙人  </a>
+                    {else}
+                        <a type="button" class="btn btn-danger  btn-xs btn-rounded" href="{:url('Admin/Users/editUsers',array('id'=>$vo['users_id'],'is_partner'=>0))}">  取消合伙人  </a>
+                    {/if}
+                     <!--<a  type="button" class="btn btn-danger  btn-xs btn-rounded"  href="javascript:if(confirm('确认删除这用户？'))location='{:url('Admin/Users/delUsers',array('id'=>$vo['users_id']))}'">  删除  </a>-->
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            {$list->render()}
+        </div>
+
+    </div>
+{/block}
